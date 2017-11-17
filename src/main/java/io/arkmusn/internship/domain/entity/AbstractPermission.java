@@ -1,8 +1,5 @@
 package io.arkmusn.internship.domain.entity;
 
-import io.arkmusn.internship.domain.PermissionActionType;
-import io.arkmusn.internship.domain.PermissionEntityType;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;

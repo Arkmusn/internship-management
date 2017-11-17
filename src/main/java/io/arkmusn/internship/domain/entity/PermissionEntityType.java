@@ -1,4 +1,4 @@
-package io.arkmusn.internship.domain;
+package io.arkmusn.internship.domain.entity;
 
 /**
  * 权限实体类类型
