@@ -9,5 +9,5 @@ import java.io.Serializable;
  *         create 2017/11/14
  */
 
-class BaseEntity implements Serializable {
+abstract class BaseEntity implements Serializable {
 }
