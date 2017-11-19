@@ -22,6 +22,7 @@ public class Student extends BaseEntity {
     private Boolean sex;
 
     @ManyToOne
+    @JoinColumn(name = "class_id")
     private ClassInfo classInfo;
 
     public Student() {

@@ -31,6 +31,8 @@ public class Intern {
     @Column(columnDefinition = "DATE")
     private Date endTime;
 
+    private String theme;
+
     private String companyName;
 
     private String companyAddress;
@@ -155,5 +157,13 @@ public class Intern {
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 }

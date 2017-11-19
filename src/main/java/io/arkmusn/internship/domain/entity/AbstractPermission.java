@@ -19,7 +19,7 @@ public abstract class AbstractPermission extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PermissionEntityType entityType;
 
-    private Integer entityId;
+    private String entityId;
 
     @Enumerated(EnumType.STRING)
     private PermissionActionType actionType;
@@ -35,11 +35,11 @@ public abstract class AbstractPermission extends BaseEntity {
         this.entityType = entityType;
     }
 
-    public Integer getEntityId() {
+    public String getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) {
+    public void setEntityId(String entityId) {
         this.entityId = entityId;
     }
 
