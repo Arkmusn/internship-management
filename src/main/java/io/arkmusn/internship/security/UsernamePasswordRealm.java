@@ -4,14 +4,13 @@ import io.arkmusn.internship.domain.entity.Role;
 import io.arkmusn.internship.domain.entity.User;
 import io.arkmusn.internship.service.PermissionService;
 import io.arkmusn.internship.service.UserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
@@ -22,6 +21,8 @@ import java.util.Set;
  */
 
 public class UsernamePasswordRealm extends AuthorizingRealm {
+    private Logger logger = LoggerFactory.getLogger(UsernamePasswordRealm.class);
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -29,11 +30,19 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        User user = userService.getUserByUsername(token.getPrincipal().toString());
-        if (user.getPassword().equals(token.getCredentials().toString())) {
+        String username = (String) token.getPrincipal();
+        String password = (String) token.getCredentials();
+        if (username == null)
+            throw new UnknownAccountException();
+        if (password == null)
+            throw new IncorrectCredentialsException();
+
+        User user = userService.getUserByUsername(username);
+        if (user.getPassword().equals(password)) {
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), this.getName());
         }
-        return null;
+        else
+            throw new IncorrectCredentialsException();
     }
 
     @Override
