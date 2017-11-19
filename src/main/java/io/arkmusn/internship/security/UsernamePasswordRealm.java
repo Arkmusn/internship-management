@@ -31,7 +31,7 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
-        String password = (String) token.getCredentials();
+        String password = String.valueOf((char[]) token.getCredentials());
         if (username == null)
             throw new UnknownAccountException();
         if (password == null)

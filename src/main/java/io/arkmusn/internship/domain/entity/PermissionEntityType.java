@@ -6,9 +6,5 @@ package io.arkmusn.internship.domain.entity;
  * @author Arkmusn on 2017/11/15.
  */
 public enum PermissionEntityType {
-    MENU,
-    TEACHER,
-    STUDENT,
-    INTERN,
-    REPORT
+    MENU, TEACHER, STUDENT, INTERN, REPORT
 }

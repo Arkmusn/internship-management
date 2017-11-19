@@ -1,6 +1,6 @@
 package io.arkmusn.internship.controller;
 
-import io.arkmusn.internship.domain.vo.Response;
+import io.arkmusn.internship.model.vo.Response;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

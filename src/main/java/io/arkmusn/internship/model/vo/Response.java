@@ -1,4 +1,4 @@
-package io.arkmusn.internship.domain.vo;
+package io.arkmusn.internship.model.vo;
 
 /**
  * 响应实体
@@ -13,7 +13,7 @@ public class Response<T> {
 
     private boolean success;
     private String code;
-    private T entity;
+    private T data;
 
     public Response() {
         this(true, CODE_SUCCESS, null);
@@ -25,18 +25,22 @@ public class Response<T> {
             this.code = CODE_FAIL;
     }
 
-    public Response(boolean success, T entity) {
-        this(success, CODE_SUCCESS, entity);
+    public Response(T data) {
+        this(true, null, data);
+    }
+
+    public Response(boolean success, T data) {
+        this(success, CODE_SUCCESS, data);
     }
 
     public Response(boolean success, String code) {
         this(success, code, null);
     }
 
-    public Response(boolean success, String code, T entity) {
+    public Response(boolean success, String code, T data) {
         this.success = success;
         this.code = code;
-        this.entity = entity;
+        this.data = data;
     }
 
     public boolean isSuccess() {
@@ -55,11 +59,11 @@ public class Response<T> {
         this.code = code;
     }
 
-    public T getEntity() {
-        return entity;
+    public T getData() {
+        return data;
     }
 
-    public void setEntity(T entity) {
-        this.entity = entity;
+    public void setData(T data) {
+        this.data = data;
     }
 }
