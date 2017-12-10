@@ -1,4 +1,6 @@
-package io.arkmusn.internship.model.vo;
+package io.arkmusn.internship.model.bo;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * 响应实体
@@ -7,6 +9,7 @@ package io.arkmusn.internship.model.vo;
  *         create 2017/11/18
  */
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Response<T> {
     public static final String CODE_SUCCESS = "200";
     public static final String CODE_FAIL = "400";
@@ -26,7 +29,7 @@ public class Response<T> {
     }
 
     public Response(T data) {
-        this(true, null, data);
+        this(true, CODE_SUCCESS, data);
     }
 
     public Response(boolean success, T data) {
