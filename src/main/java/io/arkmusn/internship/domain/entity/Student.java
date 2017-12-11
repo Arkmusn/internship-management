@@ -23,7 +23,9 @@ public class Student extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String no;
+    @OneToOne
+    @JoinColumn(name = "no", referencedColumnName = "username")
+    private User user;
 
     private String name;
 
@@ -44,12 +46,12 @@ public class Student extends BaseEntity {
         this.id = id;
     }
 
-    public String getNo() {
-        return no;
+    public User getUser() {
+        return user;
     }
 
-    public void setNo(String no) {
-        this.no = no;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {

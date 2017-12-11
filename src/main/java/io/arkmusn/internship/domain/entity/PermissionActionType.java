@@ -6,5 +6,5 @@ package io.arkmusn.internship.domain.entity;
  * @author Arkmusn on 2017/11/15.
  */
 public enum PermissionActionType {
-    VIEW, CREATE, UPDATE, DELETE, ALL
+    VIEW, CREATE, UPDATE, DELETE, ALL, RESET
 }

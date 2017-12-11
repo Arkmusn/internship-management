@@ -2,6 +2,7 @@ package io.arkmusn.internship.controller;
 
 import io.arkmusn.internship.domain.entity.Student;
 import io.arkmusn.internship.model.bo.Response;
+import io.arkmusn.internship.model.vo.ResetPasswordVo;
 import io.arkmusn.internship.model.vo.StudentListVo;
 import io.arkmusn.internship.service.StudentService;
 import io.arkmusn.internship.util.PageUtils;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 
 /**
@@ -56,5 +59,30 @@ public class StudentController extends BaseController {
     public @ResponseBody
     Response edit(@RequestBody Student student) {
         return new Response(studentService.edit(student));
+    }
+
+    /**
+     * 删除学生信息
+     *
+     * @param ids ids
+     * @return 结果
+     */
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public @ResponseBody
+    Response<Integer> delete(@RequestBody Collection<Integer> ids) {
+        return new Response<>(true, studentService.delete(ids));
+    }
+
+
+    /**
+     * 重设密码
+     *
+     * @param resetPasswordVo 重设密码
+     * @return 结果
+     */
+    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
+    public @ResponseBody
+    Response resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
+        return new Response(studentService.resetPassword(resetPasswordVo));
     }
 }

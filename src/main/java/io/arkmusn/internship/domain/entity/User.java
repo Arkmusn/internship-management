@@ -1,6 +1,8 @@
 package io.arkmusn.internship.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +15,8 @@ import java.util.Set;
  */
 
 @Entity
+@DynamicUpdate
+@SelectBeforeUpdate
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
