@@ -1,5 +1,10 @@
 package io.arkmusn.internship.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
+
 import javax.persistence.*;
 
 /**
@@ -10,12 +15,17 @@ import javax.persistence.*;
  */
 
 @Entity
+@DynamicUpdate
+@SelectBeforeUpdate
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String no;
+    @OneToOne
+    @JoinColumn(name = "no", referencedColumnName = "username")
+    private User user;
 
     private String name;
 
@@ -35,12 +45,12 @@ public class Teacher {
         this.id = id;
     }
 
-    public String getNo() {
-        return no;
+    public User getUser() {
+        return user;
     }
 
-    public void setNo(String no) {
-        this.no = no;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {

@@ -1,6 +1,6 @@
 package io.arkmusn.internship.util;
 
-import io.arkmusn.internship.domain.entity.Listable;
+import io.arkmusn.internship.model.bo.Listable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 

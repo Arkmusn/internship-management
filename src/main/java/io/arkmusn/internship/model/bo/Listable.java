@@ -1,4 +1,4 @@
-package io.arkmusn.internship.domain.entity;
+package io.arkmusn.internship.model.bo;
 
 /**
  * @author Arkmusn on 2017/12/10.

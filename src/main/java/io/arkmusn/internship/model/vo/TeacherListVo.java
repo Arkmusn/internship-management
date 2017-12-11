@@ -1,16 +1,14 @@
 package io.arkmusn.internship.model.vo;
 
-import io.arkmusn.internship.domain.entity.Student;
+import io.arkmusn.internship.domain.entity.Teacher;
 import io.arkmusn.internship.model.bo.Listable;
 
 /**
- * 学生列表参数接收对象
- *
  * @author Arkmusn
- *         create 2017/12/10
+ *         create 2017/12/11
  */
 
-public class StudentListVo extends Student implements Listable {
+public class TeacherListVo extends Teacher implements Listable {
     private int page;
     private int size;
 
