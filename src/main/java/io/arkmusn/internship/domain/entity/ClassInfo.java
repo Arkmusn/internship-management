@@ -30,12 +30,14 @@ public class ClassInfo extends BaseEntity {
     public ClassInfo() {
     }
 
-    public Integer getId() {
+    @Override
+    public Number getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public String getNo() {

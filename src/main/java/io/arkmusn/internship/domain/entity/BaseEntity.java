@@ -9,5 +9,10 @@ import java.io.Serializable;
  *         create 2017/11/14
  */
 
-abstract class BaseEntity implements Serializable {
+abstract public class BaseEntity implements Serializable {
+    Number id;
+
+    public abstract Number getId();
+
+    public abstract void setId(Number id);
 }

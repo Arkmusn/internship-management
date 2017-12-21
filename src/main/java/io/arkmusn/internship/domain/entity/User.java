@@ -35,8 +35,14 @@ public class User extends BaseEntity {
     public User() {
     }
 
+    @Override
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public void setId(Integer id) {

@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 @Entity
-public class Report {
+public class Report extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,8 +35,14 @@ public class Report {
     public Report() {
     }
 
+    @Override
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public void setId(Integer id) {

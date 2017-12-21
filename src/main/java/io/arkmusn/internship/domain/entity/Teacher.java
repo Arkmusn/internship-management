@@ -18,7 +18,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @SelectBeforeUpdate
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Teacher {
+public class Teacher extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -37,8 +37,14 @@ public class Teacher {
     public Teacher() {
     }
 
+    @Override
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public void setId(Integer id) {

@@ -1,5 +1,7 @@
 package io.arkmusn.internship.domain.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.List;
  */
 
 @Entity
-public class Intern {
+@DynamicUpdate
+public class Intern extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -55,8 +58,14 @@ public class Intern {
     public Intern() {
     }
 
+    @Override
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public void setId(Integer id) {

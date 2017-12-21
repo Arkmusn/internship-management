@@ -38,12 +38,14 @@ public class Student extends BaseEntity {
     public Student() {
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public User getUser() {

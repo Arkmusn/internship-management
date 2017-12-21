@@ -10,12 +10,18 @@ import org.apache.shiro.subject.Subject;
  */
 
 public abstract class PermissionUtils {
-    public static void checkPermission(String permission) {
+    public static void checkPermission(String... PermissionStrings) {
+        StringBuilder builder = new StringBuilder();
+        for (String s : PermissionStrings) {
+            builder.append(s);
+            builder.append(':');
+        }
+        builder.deleteCharAt(builder.length() - 1);
         Subject subject = SecurityUtils.getSubject();
-        subject.checkPermission(permission);
+        subject.checkPermission(builder.toString());
     }
 
     public static void checkPermission(Permission permission) {
-        PermissionUtils.checkPermission(permission.getEntityType() + ":" + permission.getEntityId() + ":" + permission.getActionType());
+        PermissionUtils.checkPermission(permission.getEntityType().toString().toLowerCase(), permission.getEntityId(), permission.getActionType().toString().toLowerCase());
     }
 }

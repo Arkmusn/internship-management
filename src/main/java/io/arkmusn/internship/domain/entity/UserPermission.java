@@ -21,6 +21,16 @@ public class UserPermission extends AbstractPermission {
     public UserPermission() {
     }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.longValue();
+    }
+
     public User getUser() {
         return user;
     }

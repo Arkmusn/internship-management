@@ -22,8 +22,12 @@ import java.util.Collection;
 @Controller
 @RequestMapping("student")
 public class StudentController extends BaseController {
-    @Autowired
     private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     /**
      * 获取学生信息

@@ -24,8 +24,14 @@ public class Role extends BaseEntity {
     public Role() {
     }
 
+    @Override
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.intValue();
     }
 
     public void setId(Integer id) {

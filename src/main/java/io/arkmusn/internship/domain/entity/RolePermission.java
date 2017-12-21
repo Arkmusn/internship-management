@@ -21,6 +21,16 @@ public class RolePermission extends AbstractPermission {
     public RolePermission() {
     }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.longValue();
+    }
+
     public Role getRole() {
         return role;
     }

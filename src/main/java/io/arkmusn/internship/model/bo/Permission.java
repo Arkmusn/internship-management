@@ -15,4 +15,14 @@ public class Permission extends AbstractPermission {
         this.setEntityId(entityId);
         this.setActionType(actionType);
     }
+
+    @Override
+    public Number getId() {
+        return Long.parseLong(getEntityId());
+    }
+
+    @Override
+    public void setId(Number id) {
+        setEntityId(id.toString());
+    }
 }
