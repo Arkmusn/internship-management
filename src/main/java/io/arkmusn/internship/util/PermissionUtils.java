@@ -11,17 +11,33 @@ import org.apache.shiro.subject.Subject;
 
 public abstract class PermissionUtils {
     public static void checkPermission(String... PermissionStrings) {
-        StringBuilder builder = new StringBuilder();
-        for (String s : PermissionStrings) {
-            builder.append(s);
-            builder.append(':');
-        }
-        builder.deleteCharAt(builder.length() - 1);
+        String string = getPermissionString(PermissionStrings);
         Subject subject = SecurityUtils.getSubject();
-        subject.checkPermission(builder.toString());
+        subject.checkPermission(string);
     }
 
     public static void checkPermission(Permission permission) {
         PermissionUtils.checkPermission(permission.getEntityType().toString().toLowerCase(), permission.getEntityId(), permission.getActionType().toString().toLowerCase());
+    }
+
+    public static void savePermission(Permission permission) {
+
+    }
+
+    public static void savePermission(String... PermissionStrings) {
+
+    }
+
+    public static String getPermissionString(String[] PermissionStrings) {
+        StringBuilder builder = new StringBuilder();
+        for (String s : PermissionStrings) {
+            if (StringUtils.isEmpty(s))
+                continue;
+            s = s.toLowerCase();
+            builder.append(s);
+            builder.append(':');
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
     }
 }

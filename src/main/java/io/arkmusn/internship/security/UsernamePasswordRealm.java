@@ -12,6 +12,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -20,13 +21,18 @@ import java.util.Set;
  *         create 2017/11/17
  */
 
+@Component
 public class UsernamePasswordRealm extends AuthorizingRealm {
     private Logger logger = LoggerFactory.getLogger(UsernamePasswordRealm.class);
 
-    @Autowired
     private UserService userService;
-    @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    public UsernamePasswordRealm(UserService userService, PermissionService permissionService) {
+        this.userService = userService;
+        this.permissionService = permissionService;
+    }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -51,7 +57,7 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
         Set<Role> roles = user.getRoles();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         roles.forEach(role -> authorizationInfo.addRole(role.getName()));
-        authorizationInfo.addStringPermissions(permissionService.getPermissionStrByUserId(user.getId()));
+        authorizationInfo.addStringPermissions(permissionService.getPermissionStringByUserId(user.getId()));
         return authorizationInfo;
     }
 }

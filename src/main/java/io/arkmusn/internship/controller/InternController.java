@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 /**
  * @author Arkmusn
  *         create 2017/12/11
@@ -15,8 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("intern")
 public class InternController extends BaseController {
-    @Autowired
     private InternService internService;
+
+    @Autowired
+    public InternController(InternService internService) {
+        this.internService = internService;
+    }
 
     /**
      * 获取实习申报书信息
@@ -40,5 +46,29 @@ public class InternController extends BaseController {
     public @ResponseBody
     Response edit(@RequestBody Intern intern) {
         return new Response(internService.edit(intern));
+    }
+
+    /**
+     * 删除申报书
+     *
+     * @param ids 申报书ID列表
+     * @return 结果
+     */
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public @ResponseBody
+    Response<Integer> delete(@RequestBody Collection<Integer> ids) {
+        return new Response<>(true, internService.delete(ids));
+    }
+
+    /**
+     * 结束实习
+     *
+     * @param ids 申报书ID列表
+     * @return 结果
+     */
+    @RequestMapping(value = "finish", method = RequestMethod.POST)
+    public @ResponseBody
+    Response<Integer> finish(@RequestBody Collection<Integer> ids) {
+        return new Response<>(true, internService.finish(ids));
     }
 }

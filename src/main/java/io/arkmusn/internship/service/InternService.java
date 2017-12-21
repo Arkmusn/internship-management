@@ -5,6 +5,8 @@ import io.arkmusn.internship.repository.InternRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 /**
  * @author Arkmusn
  *         create 2017/12/11
@@ -19,5 +21,10 @@ public class InternService extends CrudService<Intern> {
     public InternService(InternRepository internRepository) {
         super(internRepository);
         this.internRepository = internRepository;
+    }
+
+    public int finish(Collection<Integer> ids) {
+        // TODO 引入工作流后补全
+        return -1;
     }
 }
