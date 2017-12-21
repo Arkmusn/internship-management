@@ -2,8 +2,11 @@ package io.arkmusn.internship.controller;
 
 import io.arkmusn.internship.domain.entity.Intern;
 import io.arkmusn.internship.model.bo.Response;
+import io.arkmusn.internship.model.vo.InternListVo;
 import io.arkmusn.internship.service.InternService;
+import io.arkmusn.internship.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +37,18 @@ public class InternController extends BaseController {
     public @ResponseBody
     Response<Intern> get(@PathVariable Integer id) {
         return new Response<>(internService.get(id));
+    }
+
+    /**
+     * 获取实习申报书列表
+     *
+     * @param internListVo 学生信息分页对象
+     * @return 分页实习申报书信息
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public @ResponseBody
+    Response<Page<Intern>> list(@RequestBody InternListVo internListVo) {
+        return new Response<>(internService.list(PageUtils.toPageable(internListVo)));
     }
 
     /**

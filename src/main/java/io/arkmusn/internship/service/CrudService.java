@@ -91,6 +91,7 @@ abstract public class CrudService<T extends BaseEntity> {
      */
     @SuppressWarnings("unchecked")
     public Page<T> list(Pageable page) {
+        PermissionUtils.checkPermission(className.toLowerCase(), PermissionActionType.LIST.toString().toLowerCase());
         return repository.findAll(page);
     }
 }

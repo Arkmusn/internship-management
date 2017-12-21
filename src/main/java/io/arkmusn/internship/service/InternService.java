@@ -23,6 +23,12 @@ public class InternService extends CrudService<Intern> {
         this.internRepository = internRepository;
     }
 
+    /**
+     * 结束实习
+     *
+     * @param ids 申报书ID列表
+     * @return 结果
+     */
     public int finish(Collection<Integer> ids) {
         // TODO 引入工作流后补全
         return -1;
