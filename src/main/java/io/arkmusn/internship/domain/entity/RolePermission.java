@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class RolePermission extends AbstractPermission {
-
     @ManyToOne
     private Role role;
 

@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractPermission extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     protected Long id;
@@ -26,6 +25,16 @@ public abstract class AbstractPermission extends BaseEntity {
     private PermissionActionType actionType;
 
     public AbstractPermission() {
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.longValue();
     }
 
     public PermissionEntityType getEntityType() {
@@ -50,15 +59,5 @@ public abstract class AbstractPermission extends BaseEntity {
 
     public void setActionType(PermissionActionType actionType) {
         this.actionType = actionType;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Number id) {
-        this.id = id.longValue();
     }
 }
