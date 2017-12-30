@@ -1,6 +1,7 @@
 package io.arkmusn.internship.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Department extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private Set<ClassInfo> classInfos;
 
     public Department() {
