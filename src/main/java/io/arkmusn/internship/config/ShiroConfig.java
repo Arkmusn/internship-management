@@ -37,7 +37,6 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         shiroFilterFactoryBean.setLoginUrl("/login/signIn");
-        shiroFilterFactoryBean.setSuccessUrl("/index.html");
         return shiroFilterFactoryBean;
     }
 

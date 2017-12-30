@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 
 abstract public class PageUtils {
     public static Pageable toPageable(Listable listable) {
-        return new PageRequest(listable.getPage(), listable.getSize());
+        int page = listable.getPage();
+        int size = listable.getSize();
+        return new PageRequest(page == 0 ? 1 : page, size == 0 ? 10 : size);
     }
 }
