@@ -1,6 +1,7 @@
 package io.arkmusn.internship.domain.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  * 角色权限实体类
@@ -11,24 +12,11 @@ import javax.persistence.*;
 
 @Entity
 public class RolePermission extends AbstractPermission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @ManyToOne
     private Role role;
 
     public RolePermission() {
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Number id) {
-        this.id = id.longValue();
     }
 
     public Role getRole() {

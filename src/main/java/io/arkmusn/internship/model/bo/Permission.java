@@ -19,7 +19,7 @@ public class Permission extends AbstractPermission {
     }
 
     @Override
-    public Number getId() {
+    public Long getId() {
         return Long.parseLong(getEntityId());
     }
 

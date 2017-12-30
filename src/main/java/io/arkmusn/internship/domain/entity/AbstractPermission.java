@@ -1,9 +1,6 @@
 package io.arkmusn.internship.domain.entity;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 /**
  * 权限实体类
@@ -12,9 +9,13 @@ import javax.persistence.InheritanceType;
  *         create 2017/11/15
  */
 
+@Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractPermission extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    protected Long id;
 
     @Enumerated(EnumType.STRING)
     private PermissionEntityType entityType;
@@ -49,5 +50,15 @@ public abstract class AbstractPermission extends BaseEntity {
 
     public void setActionType(PermissionActionType actionType) {
         this.actionType = actionType;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Number id) {
+        this.id = id.longValue();
     }
 }

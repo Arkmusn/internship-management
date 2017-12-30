@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 
 abstract public class BaseEntity implements Serializable {
-    Number id;
+    protected Number id;
 
     public abstract Number getId();
 
