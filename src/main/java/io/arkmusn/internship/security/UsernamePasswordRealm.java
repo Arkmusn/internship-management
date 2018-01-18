@@ -52,7 +52,9 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
         User user = userService.getUserByUsername(principals.getPrimaryPrincipal().toString());
         Set<Role> roles = user.getRoles();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        roles.forEach(role -> authorizationInfo.addRole(role.getName()));
+        for (Role role : roles) {
+            authorizationInfo.addRole(role.getName());
+        }
         authorizationInfo.addStringPermissions(permissionService.getPermissionStringByUserId(user.getId()));
         return authorizationInfo;
     }

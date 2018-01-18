@@ -41,7 +41,7 @@ abstract public class CrudService<T extends BaseEntity> {
      */
     @SuppressWarnings("unchecked")
     public T get(Number id) {
-        PermissionUtils.checkPermission(className.toLowerCase(), id.toString(), PermissionActionType.VIEW.toString().toLowerCase());
+        PermissionUtils.checkPermission(className.toLowerCase(), id.toString());
         return (T) repository.findOne(id);
     }
 

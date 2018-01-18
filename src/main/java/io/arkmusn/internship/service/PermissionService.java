@@ -1,14 +1,10 @@
 package io.arkmusn.internship.service;
 
-import io.arkmusn.internship.domain.entity.AbstractPermission;
-import io.arkmusn.internship.domain.entity.Role;
-import io.arkmusn.internship.domain.entity.User;
-import io.arkmusn.internship.domain.entity.UserPermission;
+import io.arkmusn.internship.domain.entity.*;
 import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.repository.RolePermissionRepository;
 import io.arkmusn.internship.repository.UserPermissionRepository;
 import io.arkmusn.internship.repository.UserRepository;
-import io.arkmusn.internship.util.PermissionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -48,10 +44,10 @@ public class PermissionService {
         Set<String> permissionStrSet = new HashSet<>(64);
         permissionStrSet.addAll(buildPermissionStrings(userPermissions));
         Set<Role> roles = user.getRoles();
-        roles.forEach(role -> {
+        for (Role role : roles) {
             List<AbstractPermission> rolePermissions = rolePermissionRepository.findByRoleId(role.getId());
             permissionStrSet.addAll(buildPermissionStrings(rolePermissions));
-        });
+        }
         return permissionStrSet;
     }
 
@@ -63,10 +59,37 @@ public class PermissionService {
      */
     private Collection<String> buildPermissionStrings(Collection<AbstractPermission> permissions) {
         Set<String> set = new HashSet<>(64);
-        permissions.forEach(permission -> set.add(PermissionUtils.getPermissionString(new String[]{permission.getEntityType().toString(), permission.getEntityId(), permission.getActionType().toString()})));
+        StringBuilder sb;
+        // 将权限表的all变为权限字符串的*
+        for (AbstractPermission permission : permissions) {
+            sb = new StringBuilder();
+
+            if (permission.getEntityType() == PermissionEntityType.ALL)
+                sb.append('*');
+            else
+                sb.append(permission.getEntityType());
+            sb.append(':');
+
+            sb.append(permission.getEntityId());
+            sb.append(':');
+
+            if (permission.getActionType() == PermissionActionType.ALL)
+                sb.append('*');
+            else
+                sb.append(permission.getActionType());
+
+            set.add(sb.toString());
+        }
         return set;
     }
 
+    /**
+     * 保存用户权限
+     *
+     * @param permission 权限
+     * @param userId     用户ID
+     * @return 结果
+     */
     public boolean savePermissionForUser(Permission permission, Integer userId) {
         User user = userRepository.findOne(userId);
         Assert.notNull(user, "用户ID:" + userId + "不存在");
