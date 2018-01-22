@@ -60,7 +60,7 @@ public class InternController extends BaseController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Intern intern) {
-        return new Response(internService.edit(intern));
+        return new Response(internService.save(intern));
     }
 
     /**

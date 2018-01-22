@@ -67,7 +67,7 @@ public class PermissionService {
             if (permission.getEntityType() == PermissionEntityType.ALL)
                 sb.append('*');
             else
-                sb.append(permission.getEntityType());
+                sb.append(permission.getEntityType().toString().toLowerCase());
             sb.append(':');
 
             sb.append(permission.getEntityId());
@@ -76,7 +76,7 @@ public class PermissionService {
             if (permission.getActionType() == PermissionActionType.ALL)
                 sb.append('*');
             else
-                sb.append(permission.getActionType());
+                sb.append(permission.getActionType().toString().toLowerCase());
 
             set.add(sb.toString());
         }

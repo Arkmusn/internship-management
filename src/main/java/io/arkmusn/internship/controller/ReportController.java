@@ -45,7 +45,7 @@ public class ReportController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Report report) {
-        return new Response(reportService.edit(report));
+        return new Response(reportService.save(report));
     }
 
     /**

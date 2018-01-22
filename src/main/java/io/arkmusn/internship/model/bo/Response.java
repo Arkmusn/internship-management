@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class Response<T> {
     public static final String CODE_SUCCESS = "200";
     public static final String CODE_FAIL = "400";
+    public static final String CODE_UNAUTHENTICATED = "500";
 
     private boolean success;
     private String code;

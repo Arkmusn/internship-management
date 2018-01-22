@@ -38,7 +38,7 @@ public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
         }
         // 不是登录请求则返回验证未通过
         else {
-            JSONObject responseJson = new JSONObject(new Response<>(false, Response.CODE_UNAUTHENTICATION));
+            JSONObject responseJson = new JSONObject(new Response<>(false, Response.CODE_UNAUTHENTICATED));
 
             PrintWriter out = null;
             try {

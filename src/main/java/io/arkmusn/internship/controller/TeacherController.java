@@ -21,8 +21,12 @@ import java.util.Collection;
 @Controller
 @RequestMapping("teacher")
 public class TeacherController extends BaseController {
-    @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
+    }
 
     /**
      * 获取教师信息
@@ -44,8 +48,9 @@ public class TeacherController extends BaseController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public @ResponseBody
-    Response<Page<Teacher>> list(@RequestBody TeacherListVo teacherListVo) {
-        return new Response<>(teacherService.list(PageUtils.toPageable(teacherListVo)));
+    Response<Page<Teacher>> list(TeacherListVo teacherListVo) {
+        Page<Teacher> list = teacherService.list(PageUtils.toPageable(teacherListVo));
+        return new Response<>(list);
     }
 
     /**
@@ -57,7 +62,7 @@ public class TeacherController extends BaseController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Teacher teacher) {
-        return new Response(teacherService.edit(teacher));
+        return new Response(teacherService.save(teacher));
     }
 
     /**

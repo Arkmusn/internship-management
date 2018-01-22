@@ -62,7 +62,7 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Student student) {
-        return new Response(studentService.edit(student));
+        return new Response(studentService.save(student));
     }
 
     /**

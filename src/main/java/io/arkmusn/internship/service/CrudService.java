@@ -52,10 +52,10 @@ abstract public class CrudService<T extends BaseEntity> {
      * @return 结果
      */
     @Transactional
-    public boolean edit(T entity) {
+    public boolean save(T entity) {
         // 新增
         Number id = entity.getId();
-        if (StringUtils.isEmpty(id)) {
+        if (StringUtils.isEmpty(id) || id.equals(-1)) {
             PermissionUtils.checkPermission(className.toLowerCase(), PermissionActionType.CREATE.toString().toLowerCase());
         }
         // 编辑
