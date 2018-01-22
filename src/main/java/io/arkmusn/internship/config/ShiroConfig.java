@@ -1,6 +1,7 @@
 package io.arkmusn.internship.config;
 
 import io.arkmusn.internship.security.UsernamePasswordRealm;
+import io.arkmusn.internship.security.filter.AjaxAuthenticationFilter;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,11 +32,16 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/static/**", "anon");
-        filterMap.put("/login/signOut", "logout");
-        filterMap.put("/**", "authc");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
+
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/login/signOut", "logout");
+        filterChainDefinitionMap.put("/**", "authc");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put("authc", ajaxAuthenticationFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
 
         shiroFilterFactoryBean.setLoginUrl("/login/signIn");
         return shiroFilterFactoryBean;
@@ -50,6 +57,16 @@ public class ShiroConfig {
     @Bean
     public Realm realm() {
         return new UsernamePasswordRealm();
+    }
+
+    /**
+     * 自定义登录验证过滤器
+     *
+     * @return ajaxAuthenticationFilter
+     */
+    @Bean
+    public AjaxAuthenticationFilter ajaxAuthenticationFilter() {
+        return new AjaxAuthenticationFilter();
     }
 
     /**
