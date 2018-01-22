@@ -49,10 +49,6 @@ public class Report extends BaseEntity {
         this.id = id.intValue();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public Date getStartTime() {
         return startTime;
     }

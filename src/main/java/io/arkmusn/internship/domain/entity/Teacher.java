@@ -47,10 +47,6 @@ public class Teacher extends BaseEntity {
         this.id = id.intValue();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public User getUser() {
         return user;
     }

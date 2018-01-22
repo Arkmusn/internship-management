@@ -73,10 +73,6 @@ public class Intern extends BaseEntity {
         this.id = id.intValue();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public Student getStudent() {
         return student;
     }
