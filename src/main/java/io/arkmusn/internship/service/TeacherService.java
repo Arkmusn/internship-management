@@ -8,6 +8,7 @@ import io.arkmusn.internship.repository.TeacherRepository;
 import io.arkmusn.internship.repository.UserRepository;
 import io.arkmusn.internship.util.PermissionUtils;
 import io.arkmusn.internship.util.StringUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +51,7 @@ public class TeacherService extends CrudService<Teacher> {
         Teacher teacher = teacherRepository.findOne(id);
         Assert.notNull(teacher, "教师ID不存在");
         User user = teacher.getUser();
-        user.setPassword(resetPasswordVo.getNewPassword());
+        user.setPassword(new Sha256Hash(resetPasswordVo.getNewPassword()).toHex());
         userRepository.saveAndFlush(user);
         return true;
     }
