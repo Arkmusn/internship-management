@@ -20,7 +20,8 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @SelectBeforeUpdate
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  property = "id")
 public class User extends BaseEntity {
     public static final String INIT_PASSWORD = new Sha256Hash("666666").toHex();
 
@@ -35,7 +36,11 @@ public class User extends BaseEntity {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "user_role",
+               joinColumns = @JoinColumn(name = "user_id",
+                                         referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id",
+                                                referencedColumnName = "id"))
     @JsonIgnore
     private Set<Role> roles;
 

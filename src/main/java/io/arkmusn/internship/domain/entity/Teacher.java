@@ -23,7 +23,7 @@ public class Teacher extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "no", referencedColumnName = "username")
     private User user;
 

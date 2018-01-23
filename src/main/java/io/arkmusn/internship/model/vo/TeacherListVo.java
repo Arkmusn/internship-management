@@ -1,5 +1,6 @@
 package io.arkmusn.internship.model.vo;
 
+import io.arkmusn.internship.domain.entity.Teacher;
 import io.arkmusn.internship.model.bo.Listable;
 
 /**
@@ -7,7 +8,7 @@ import io.arkmusn.internship.model.bo.Listable;
  *         create 2017/12/11
  */
 
-public class TeacherListVo implements Listable {
+public class TeacherListVo extends Teacher implements Listable {
     private int page;
     private int size;
 

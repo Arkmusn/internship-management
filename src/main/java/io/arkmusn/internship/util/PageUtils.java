@@ -15,6 +15,6 @@ abstract public class PageUtils {
     public static Pageable toPageable(Listable listable) {
         int page = listable.getPage();
         int size = listable.getSize();
-        return new PageRequest(page == 0 ? 1 : page, size == 0 ? 10 : size);
+        return new PageRequest(page == 1 ? 0 : page - 1, size == 0 ? 10 : size);
     }
 }
