@@ -14,7 +14,8 @@ import java.util.Date;
  */
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  property = "id")
 public class Report extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -24,7 +25,8 @@ public class Report extends BaseEntity {
     @Column(columnDefinition = "DATE")
     private Date startTime;
 
-    @Column(columnDefinition = "TEXT", length = 1024)
+    @Column(columnDefinition = "TEXT",
+            length = 1024)
     private String process;
 
     private Integer weekday;

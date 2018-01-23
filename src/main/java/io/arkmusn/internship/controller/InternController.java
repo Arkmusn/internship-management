@@ -33,7 +33,8 @@ public class InternController extends BaseController {
      * @param id 实习申报书ID
      * @return 实习申报书
      */
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Intern> get(@PathVariable Integer id) {
         return new Response<>(internService.get(id));
@@ -45,7 +46,8 @@ public class InternController extends BaseController {
      * @param internListVo 学生信息分页对象
      * @return 分页实习申报书信息
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Page<Intern>> list(@RequestBody InternListVo internListVo) {
         return new Response<>(internService.list(PageUtils.toPageable(internListVo)));
@@ -57,7 +59,8 @@ public class InternController extends BaseController {
      * @param intern 申报书
      * @return 结果
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Intern intern) {
         return new Response(internService.save(intern));
@@ -69,7 +72,8 @@ public class InternController extends BaseController {
      * @param ids 申报书ID列表
      * @return 结果
      */
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping(value = "delete",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response<Integer> delete(@RequestBody Collection<Integer> ids) {
         return new Response<>(true, internService.delete(ids));
@@ -81,7 +85,8 @@ public class InternController extends BaseController {
      * @param ids 申报书ID列表
      * @return 结果
      */
-    @RequestMapping(value = "finish", method = RequestMethod.POST)
+    @RequestMapping(value = "finish",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response<Integer> finish(@RequestBody Collection<Integer> ids) {
         return new Response<>(true, internService.finish(ids));

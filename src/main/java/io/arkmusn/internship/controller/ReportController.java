@@ -30,7 +30,8 @@ public class ReportController {
      * @param id 实习周报ID
      * @return 实习周报信息
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Report> get(@PathVariable Integer id) {
         return new Response<>(reportService.get(id));
@@ -42,7 +43,8 @@ public class ReportController {
      * @param report 实习周报
      * @return 结果
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Report report) {
         return new Response(reportService.save(report));
@@ -54,7 +56,8 @@ public class ReportController {
      * @param ids 实习周报ID列表
      * @return 结果
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response<Integer> delete(@RequestBody Collection<Integer> ids) {
         return new Response<>(reportService.delete(ids));

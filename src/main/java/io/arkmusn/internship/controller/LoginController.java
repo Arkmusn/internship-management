@@ -31,7 +31,8 @@ public class LoginController extends BaseController {
      * @param request  当前请求
      * @return 该用户的角色
      */
-    @RequestMapping(value = "signIn", method = RequestMethod.POST)
+    @RequestMapping(value = "signIn",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response signIn(@RequestParam String username, HttpServletRequest request) {
         String exception = (String) request.getAttribute("shiroLoginFailure");

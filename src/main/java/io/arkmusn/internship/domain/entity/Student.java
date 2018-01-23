@@ -17,14 +17,16 @@ import javax.persistence.*;
 @Entity
 @DynamicUpdate
 @SelectBeforeUpdate
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  property = "id")
 public class Student extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "no", referencedColumnName = "username")
+    @JoinColumn(name = "no",
+                referencedColumnName = "username")
     private User user;
 
     private String name;

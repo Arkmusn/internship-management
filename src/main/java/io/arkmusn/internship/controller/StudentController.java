@@ -35,7 +35,8 @@ public class StudentController extends BaseController {
      * @param id 学生ID
      * @return 学生信息
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Student> get(@PathVariable Integer id) {
         return new Response<>(studentService.get(id));
@@ -47,9 +48,10 @@ public class StudentController extends BaseController {
      * @param studentListVo 学生信息分页对象
      * @return 分页学生信息
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.GET)
     public @ResponseBody
-    Response<Page<Student>> list(@RequestBody StudentListVo studentListVo) {
+    Response<Page<Student>> list(StudentListVo studentListVo) {
         return new Response<>(studentService.list(PageUtils.toPageable(studentListVo)));
     }
 
@@ -59,7 +61,8 @@ public class StudentController extends BaseController {
      * @param student 学生信息
      * @return 结果
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Student student) {
         return new Response(studentService.save(student));
@@ -71,7 +74,8 @@ public class StudentController extends BaseController {
      * @param ids ids
      * @return 结果
      */
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping(value = "delete",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response<Integer> delete(@RequestBody Collection<Integer> ids) {
         return new Response<>(true, studentService.delete(ids));
@@ -83,7 +87,8 @@ public class StudentController extends BaseController {
      * @param resetPasswordVo 重设密码
      * @return 结果
      */
-    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "resetPassword",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
         return new Response(studentService.resetPassword(resetPasswordVo));

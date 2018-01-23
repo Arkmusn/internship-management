@@ -18,7 +18,8 @@ import java.util.List;
 
 @Entity
 @DynamicUpdate
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  property = "id")
 public class Intern extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -44,10 +45,12 @@ public class Intern extends BaseEntity {
 
     private String companyAddress;
 
-    @Column(columnDefinition = "TEXT", length = 4096)
+    @Column(columnDefinition = "TEXT",
+            length = 4096)
     private String object;
 
-    @Column(columnDefinition = "TEXT", length = 1024)
+    @Column(columnDefinition = "TEXT",
+            length = 1024)
     private String arrangement;
 
     private Integer weekday;

@@ -31,7 +31,8 @@ public class DepartmentController extends BaseController {
      *
      * @return 系部列表
      */
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "list",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<List<Department>> list() {
         return new Response<>(departmentService.list());

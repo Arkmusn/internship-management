@@ -34,7 +34,8 @@ public class TeacherController extends BaseController {
      * @param id 教师ID
      * @return 教师信息
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Teacher> get(@PathVariable Integer id) {
         return new Response<>(teacherService.get(id));
@@ -46,7 +47,8 @@ public class TeacherController extends BaseController {
      * @param teacherListVo 教师信息分页对象
      * @return 分页教师信息
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.GET)
     public @ResponseBody
     Response<Page<Teacher>> list(TeacherListVo teacherListVo) {
         Page<Teacher> list = teacherService.list(PageUtils.toPageable(teacherListVo));
@@ -59,7 +61,8 @@ public class TeacherController extends BaseController {
      * @param teacher 教师信息
      * @return 结果
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Teacher teacher) {
         return new Response(teacherService.save(teacher));
@@ -71,7 +74,8 @@ public class TeacherController extends BaseController {
      * @param ids ids
      * @return 结果
      */
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping(value = "delete",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response<Integer> delete(@RequestBody Collection<Integer> ids) {
         return new Response<>(true, teacherService.delete(ids));
@@ -83,7 +87,8 @@ public class TeacherController extends BaseController {
      * @param resetPasswordVo 重设密码VO
      * @return 结果
      */
-    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "resetPassword",
+                    method = RequestMethod.POST)
     public @ResponseBody
     Response resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
         return new Response(teacherService.resetPassword(resetPasswordVo));
