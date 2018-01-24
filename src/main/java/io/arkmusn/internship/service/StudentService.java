@@ -1,18 +1,20 @@
 package io.arkmusn.internship.service;
 
-import io.arkmusn.internship.domain.entity.PermissionActionType;
-import io.arkmusn.internship.domain.entity.PermissionEntityType;
-import io.arkmusn.internship.domain.entity.Student;
-import io.arkmusn.internship.domain.entity.User;
+import io.arkmusn.internship.domain.entity.*;
 import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.model.vo.ResetPasswordVo;
+import io.arkmusn.internship.repository.RoleRepository;
 import io.arkmusn.internship.repository.StudentRepository;
 import io.arkmusn.internship.repository.UserRepository;
 import io.arkmusn.internship.util.PermissionUtils;
+import io.arkmusn.internship.util.StringUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import java.util.HashSet;
 
 /**
  * @author Arkmusn
@@ -21,15 +23,19 @@ import org.springframework.util.Assert;
 
 @Service
 public class StudentService extends CrudService<Student> {
+    private UserService userService;
 
     private StudentRepository studentRepository;
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, UserRepository userRepository) {
+    public StudentService(UserService userService, StudentRepository studentRepository, UserRepository userRepository, RoleRepository roleRepository) {
         super(studentRepository);
+        this.userService = userService;
         this.studentRepository = studentRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     /**
@@ -45,8 +51,28 @@ public class StudentService extends CrudService<Student> {
         Student student = studentRepository.findOne(id);
         Assert.notNull(student, "学生ID不存在");
         User user = student.getUser();
-        user.setPassword(resetPasswordVo.getNewPassword());
+        user.setPassword(new Sha256Hash(resetPasswordVo.getNewPassword()).toHex());
         userRepository.saveAndFlush(user);
         return true;
+    }
+
+    /**
+     * 保存学生信息
+     *
+     * @param student 学生信息
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public boolean save(Student student) {
+        User user = student.getUser();
+        // 新建学生用户
+        if (StringUtils.isEmpty(user.getId())) {
+            HashSet<Role> roles = new HashSet<>(1, 1F);
+            roles.add(roleRepository.findByName("student"));
+            user.setRoles(roles);
+        }
+        userService.save(user);
+        return super.save(student);
     }
 }
