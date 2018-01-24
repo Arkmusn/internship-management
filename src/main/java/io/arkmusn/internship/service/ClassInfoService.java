@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 @Service
-public class ClassInfoService extends CrudService {
+public class ClassInfoService extends CrudService<ClassInfo> {
     private ClassInfoRepository classInfoRepository;
 
     @Autowired

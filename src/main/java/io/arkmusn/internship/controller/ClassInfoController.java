@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("classInfo")
-public class ClassInfoController {
+public class ClassInfoController extends BaseController {
     private ClassInfoService classInfoService;
 
     @Autowired
