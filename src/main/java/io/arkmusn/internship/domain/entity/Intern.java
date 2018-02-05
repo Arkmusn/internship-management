@@ -1,8 +1,6 @@
 package io.arkmusn.internship.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -18,8 +16,6 @@ import java.util.List;
 
 @Entity
 @DynamicUpdate
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-                  property = "id")
 public class Intern extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
