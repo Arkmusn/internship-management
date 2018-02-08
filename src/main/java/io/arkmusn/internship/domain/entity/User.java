@@ -41,7 +41,6 @@ public class User extends BaseEntity {
                                          referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "role_id",
                                                 referencedColumnName = "id"))
-    @JsonIgnore
     private Set<Role> roles;
 
     public User() {

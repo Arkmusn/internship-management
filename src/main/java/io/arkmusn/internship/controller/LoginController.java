@@ -42,7 +42,14 @@ public class LoginController extends BaseController {
         }
 
         User user = userService.getUserByUsername(username);
-        return new Response<>(user.getRoles());
+        return new Response<>(user);
+    }
+
+    @RequestMapping(value = "signOut",
+                    method = RequestMethod.POST)
+    public @ResponseBody
+    Response signOut() {
+        return new Response(true);
     }
 
     @Autowired

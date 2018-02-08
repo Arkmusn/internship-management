@@ -2,6 +2,7 @@ package io.arkmusn.internship.config;
 
 import io.arkmusn.internship.security.UsernamePasswordRealm;
 import io.arkmusn.internship.security.filter.AjaxAuthenticationFilter;
+import io.arkmusn.internship.security.filter.AjaxLogoutFilter;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -10,6 +11,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -39,8 +41,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
-        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        Map<String, Filter> filterMap = shiroFilterFactoryBean.getFilters();
         filterMap.put("authc", ajaxAuthenticationFilter());
+        filterMap.put("logout", ajaxLogoutFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
 
         shiroFilterFactoryBean.setLoginUrl("/login/signIn");
@@ -67,6 +70,16 @@ public class ShiroConfig {
     @Bean
     public AjaxAuthenticationFilter ajaxAuthenticationFilter() {
         return new AjaxAuthenticationFilter();
+    }
+
+    /**
+     * 自定义登出过滤器
+     *
+     * @return ajaxLogoutFilter
+     */
+    @Bean
+    public AjaxLogoutFilter ajaxLogoutFilter() {
+        return new AjaxLogoutFilter();
     }
 
     /**
@@ -99,5 +112,29 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
+    }
+
+    /**
+     * Springboot 先加载了我们自定义的 Filter，然后再加载了 ShiroFilter
+     * <p>
+     * 解决方法:
+     * 在自定义的filter里加上下面的代码
+     *
+     * @param ajaxAuthenticationFilter ajaxAuthenticationFilter
+     * @return filterRegistrationBean
+     * @link http://heeexy.com/2017/10/22/build-springboot-shiro-vue/
+     */
+    @Bean
+    public FilterRegistrationBean ajaxAuthenticationFilterRegistrationBean(AjaxAuthenticationFilter ajaxAuthenticationFilter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(ajaxAuthenticationFilter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean ajaxLogoutFilterFilterRegistrationBean(AjaxLogoutFilter ajaxLogoutFilter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(ajaxLogoutFilter);
+        registration.setEnabled(false);
+        return registration;
     }
 }
