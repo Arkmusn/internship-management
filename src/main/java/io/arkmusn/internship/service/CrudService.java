@@ -2,12 +2,18 @@ package io.arkmusn.internship.service;
 
 import io.arkmusn.internship.domain.entity.BaseEntity;
 import io.arkmusn.internship.domain.entity.PermissionActionType;
+import io.arkmusn.internship.domain.entity.User;
+import io.arkmusn.internship.repository.UserRepository;
 import io.arkmusn.internship.util.PermissionUtils;
 import io.arkmusn.internship.util.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.ParameterizedType;
@@ -23,6 +29,7 @@ import java.util.Collection;
 abstract public class CrudService<T extends BaseEntity> {
 
     protected JpaRepository repository;
+    private UserRepository userRepository;
 
     private Class<T> entityClass;
     private String className;
@@ -93,5 +100,16 @@ abstract public class CrudService<T extends BaseEntity> {
     public Page<T> list(Pageable page) {
         PermissionUtils.checkPermission(className.toLowerCase(), PermissionActionType.LIST.toString().toLowerCase());
         return repository.findAll(page);
+    }
+
+    public User getCurrentUser() {
+        Subject subject = SecurityUtils.getSubject();
+        Assert.notNull(subject, "no subject at this session!");
+        return userRepository.findByUsername(subject.getPrincipal().toString());
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 }
