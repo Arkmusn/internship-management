@@ -1,8 +1,13 @@
 package io.arkmusn.internship.service;
 
 import io.arkmusn.internship.domain.entity.Intern;
+import io.arkmusn.internship.domain.entity.InternStatus;
+import io.arkmusn.internship.domain.entity.Student;
 import io.arkmusn.internship.repository.InternRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,13 +19,31 @@ import java.util.Collection;
 
 @Service
 public class InternService extends CrudService<Intern> {
+    private StudentService studentService;
 
     private InternRepository internRepository;
 
     @Autowired
-    public InternService(InternRepository internRepository) {
+    public InternService(InternRepository internRepository, StudentService studentService) {
         super(internRepository);
         this.internRepository = internRepository;
+        this.studentService = studentService;
+    }
+
+    @Override
+    public boolean save(Intern intern) {
+        Student student = studentService.getCurrentStudent();
+        intern.setStudent(student);
+        intern.setStatus(InternStatus.CREATED);
+        return super.save(intern);
+    }
+
+    @Override
+    public Page<Intern> list(Pageable page) {
+        Student student = studentService.getCurrentStudent();
+        Intern intern = new Intern();
+        intern.setStudent(student);
+        return internRepository.findAll(Example.of(intern), page);
     }
 
     /**

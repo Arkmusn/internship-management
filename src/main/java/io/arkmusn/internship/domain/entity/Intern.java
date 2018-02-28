@@ -53,11 +53,12 @@ public class Intern extends BaseEntity {
 
     private Integer rank;
 
-    private Boolean attachment;
-
     @OneToMany(mappedBy = "id")
     @JsonIgnore
     private List<Report> reports;
+
+    @Enumerated(EnumType.STRING)
+    private InternStatus status;
 
     public Intern() {
     }
@@ -152,14 +153,6 @@ public class Intern extends BaseEntity {
         this.rank = rank;
     }
 
-    public Boolean getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(Boolean attachment) {
-        this.attachment = attachment;
-    }
-
     public List<Report> getReports() {
         return reports;
     }
@@ -174,5 +167,13 @@ public class Intern extends BaseEntity {
 
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    public InternStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(InternStatus status) {
+        this.status = status;
     }
 }

@@ -3,6 +3,7 @@ package io.arkmusn.internship.service;
 import io.arkmusn.internship.domain.entity.BaseEntity;
 import io.arkmusn.internship.domain.entity.PermissionActionType;
 import io.arkmusn.internship.domain.entity.User;
+import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.repository.UserRepository;
 import io.arkmusn.internship.util.PermissionUtils;
 import io.arkmusn.internship.util.StringUtils;
@@ -63,7 +64,7 @@ abstract public class CrudService<T extends BaseEntity> {
         // 新增
         Number id = entity.getId();
         if (StringUtils.isEmpty(id) || id.equals(-1)) {
-            PermissionUtils.checkPermission(className.toLowerCase(), PermissionActionType.CREATE.toString().toLowerCase());
+            PermissionUtils.checkPermission(className.toLowerCase(), Permission.UNKNOWN_ENTITY_ID, PermissionActionType.CREATE.toString().toLowerCase());
         }
         // 编辑
         else {
@@ -98,13 +99,13 @@ abstract public class CrudService<T extends BaseEntity> {
      */
     @SuppressWarnings("unchecked")
     public Page<T> list(Pageable page) {
-        PermissionUtils.checkPermission(className.toLowerCase(), PermissionActionType.LIST.toString().toLowerCase());
+        PermissionUtils.checkPermission(className.toLowerCase(), Permission.UNKNOWN_ENTITY_ID, PermissionActionType.LIST.toString().toLowerCase());
         return repository.findAll(page);
     }
 
     public User getCurrentUser() {
         Subject subject = SecurityUtils.getSubject();
-        Assert.notNull(subject, "no subject at this session!");
+        Assert.notNull(subject, "No subject at this session!");
         return userRepository.findByUsername(subject.getPrincipal().toString());
     }
 

@@ -12,6 +12,8 @@ import io.arkmusn.internship.domain.entity.PermissionEntityType;
  */
 
 public class Permission extends AbstractPermission {
+    public static final String UNKNOWN_ENTITY_ID = "-1";
+
     public Permission(PermissionEntityType entityType, String entityId, PermissionActionType actionType) {
         this.setEntityType(entityType);
         this.setEntityId(entityId);

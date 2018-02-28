@@ -10,6 +10,8 @@ import io.arkmusn.internship.util.PermissionUtils;
 import io.arkmusn.internship.util.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -74,5 +76,20 @@ public class StudentService extends CrudService<Student> {
         }
         userService.save(user);
         return super.save(student);
+    }
+
+    /**
+     * 获取当前登录的学生信息
+     *
+     * @return 学生信息
+     */
+    public Student getCurrentStudent() {
+        Student student = new Student();
+        student.setUser(getCurrentUser());
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("user.id", match -> match.exact());
+        Example<Student> example = Example.of(student, matcher);
+        student = studentRepository.findOne(example);
+        Assert.notNull(student, "No student at this session!");
+        return student;
     }
 }

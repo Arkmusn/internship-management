@@ -1,8 +1,6 @@
 package io.arkmusn.internship.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -20,8 +18,6 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @SelectBeforeUpdate
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-                  property = "id")
 public class User extends BaseEntity {
     public static final String INIT_PASSWORD = new Sha256Hash("666666").toHex();
 

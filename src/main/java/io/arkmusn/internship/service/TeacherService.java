@@ -10,11 +10,14 @@ import io.arkmusn.internship.util.PermissionUtils;
 import io.arkmusn.internship.util.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author Arkmusn
@@ -74,5 +77,13 @@ public class TeacherService extends CrudService<Teacher> {
         }
         userService.save(user);
         return super.save(teacher);
+    }
+
+    public List<Teacher> queryTeacherByName(String name) {
+        Teacher teacher = new Teacher();
+        teacher.setName(name);
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("name", match -> match.contains().ignoreCase());
+        Example<Teacher> example = Example.of(teacher, matcher);
+        return teacherRepository.findAll(example);
     }
 }

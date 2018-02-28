@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Arkmusn
@@ -53,6 +54,13 @@ public class TeacherController extends BaseController {
     Response<Page<Teacher>> list(TeacherListVo teacherListVo) {
         Page<Teacher> list = teacherService.list(PageUtils.toPageable(teacherListVo));
         return new Response<>(list);
+    }
+
+    @RequestMapping(value = "queryTeacherByName",
+                    method = RequestMethod.GET)
+    public @ResponseBody
+    Response<List<Teacher>> queryTeacherByName(@RequestParam String name) {
+        return new Response<>(teacherService.queryTeacherByName(name));
     }
 
     /**

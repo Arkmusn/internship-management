@@ -49,7 +49,7 @@ public class InternController extends BaseController {
     @RequestMapping(value = "/",
                     method = RequestMethod.GET)
     public @ResponseBody
-    Response<Page<Intern>> list(@RequestBody InternListVo internListVo) {
+    Response<Page<Intern>> list(InternListVo internListVo) {
         return new Response<>(internService.list(PageUtils.toPageable(internListVo)));
     }
 
