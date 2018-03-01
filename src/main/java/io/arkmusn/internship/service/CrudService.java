@@ -29,7 +29,7 @@ import java.util.Collection;
 
 abstract public class CrudService<T extends BaseEntity> {
 
-    protected JpaRepository repository;
+    protected JpaRepository<T, Number> repository;
     private UserRepository userRepository;
 
     private Class<T> entityClass;
@@ -60,7 +60,7 @@ abstract public class CrudService<T extends BaseEntity> {
      * @return 结果
      */
     @Transactional
-    public boolean save(T entity) {
+    public T save(T entity) {
         // 新增
         Number id = entity.getId();
         if (StringUtils.isEmpty(id) || id.equals(-1)) {
@@ -70,7 +70,7 @@ abstract public class CrudService<T extends BaseEntity> {
         else {
             PermissionUtils.checkPermission(className.toLowerCase(), id.toString(), PermissionActionType.UPDATE.toString().toLowerCase());
         }
-        return repository.save(entity) != null;
+        return repository.save(entity);
     }
 
     /**

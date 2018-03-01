@@ -104,4 +104,17 @@ public class InternController extends BaseController {
     Response audit(@RequestBody Collection<Integer> ids) {
         return new Response<>(true, internService.audit(ids));
     }
+
+    /**
+     * 申报书审核打回
+     *
+     * @param ids 申报书ID列表
+     * @return 结果
+     */
+    @RequestMapping(value = "reject",
+                    method = RequestMethod.POST)
+    public @ResponseBody
+    Response reject(@RequestBody Collection<Integer> ids) {
+        return new Response<>(true, internService.reject(ids));
+    }
 }

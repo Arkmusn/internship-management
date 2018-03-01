@@ -20,23 +20,32 @@ import java.util.Collection;
 
 @Service
 public class InternService extends CrudService<Intern> {
+    private PermissionService permissionService;
     private StudentService studentService;
 
     private InternRepository internRepository;
 
     @Autowired
-    public InternService(InternRepository internRepository, StudentService studentService) {
+    public InternService(PermissionService permissionService, InternRepository internRepository, StudentService studentService) {
         super(internRepository);
+        this.permissionService = permissionService;
         this.internRepository = internRepository;
         this.studentService = studentService;
     }
 
     @Override
-    public boolean save(Intern intern) {
+    public Intern save(Intern intern) {
         Student student = studentService.getCurrentStudent();
         intern.setStudent(student);
         intern.setStatus(InternStatus.CREATED);
-        return super.save(intern);
+        Intern result = super.save(intern);
+
+        User teacherUser = result.getTeacher().getUser();
+        permissionService.savePermissionForUser(new Permission(PermissionEntityType.INTERN, result.getId().toString(), PermissionActionType.UPDATE), teacherUser.getId());
+        User studentUser = result.getStudent().getUser();
+        permissionService.savePermissionForUser(new Permission(PermissionEntityType.INTERN, result.getId().toString(), PermissionActionType.ALL), studentUser.getId());
+
+        return result;
     }
 
     /**
@@ -67,6 +76,24 @@ public class InternService extends CrudService<Intern> {
             PermissionUtils.checkPermission(new Permission(PermissionEntityType.INTERN, id.toString(), PermissionActionType.UPDATE));
             Intern intern = internRepository.findOne(id);
             intern.setStatus(InternStatus.PROCESSING);
+            internRepository.save(intern);
+            count++;
+        }
+        return count;
+    }
+
+    /**
+     * 申报书审核打回
+     *
+     * @param ids 申报书ID列表
+     * @return 结果
+     */
+    public int reject(Collection<Integer> ids) {
+        int count = 0;
+        for (Integer id : ids) {
+            PermissionUtils.checkPermission(new Permission(PermissionEntityType.INTERN, id.toString(), PermissionActionType.UPDATE));
+            Intern intern = internRepository.findOne(id);
+            intern.setStatus(InternStatus.NOT_PASS);
             internRepository.save(intern);
             count++;
         }

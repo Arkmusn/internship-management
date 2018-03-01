@@ -32,7 +32,7 @@ public class UserService extends CrudService<User> {
      * @return 结果
      */
     @Override
-    public boolean save(User user) {
+    public User save(User user) {
         // 新建用户则保存默认密码
         if (StringUtils.isEmpty(user.getId())) {
             user.setPassword(User.INIT_PASSWORD);

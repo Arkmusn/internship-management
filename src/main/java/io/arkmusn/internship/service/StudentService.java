@@ -66,7 +66,7 @@ public class StudentService extends CrudService<Student> {
      */
     @Override
     @Transactional
-    public boolean save(Student student) {
+    public Student save(Student student) {
         User user = student.getUser();
         // 新建学生用户
         if (StringUtils.isEmpty(user.getId())) {

@@ -72,7 +72,7 @@ public class TeacherService extends CrudService<Teacher> {
      */
     @Override
     @Transactional
-    public boolean save(Teacher teacher) {
+    public Teacher save(Teacher teacher) {
         User user = teacher.getUser();
         // 新建教师用户
         if (StringUtils.isEmpty(user.getId())) {
