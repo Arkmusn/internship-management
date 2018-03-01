@@ -1,14 +1,15 @@
 package io.arkmusn.internship.service;
 
-import io.arkmusn.internship.domain.entity.Intern;
-import io.arkmusn.internship.domain.entity.InternStatus;
-import io.arkmusn.internship.domain.entity.Student;
+import io.arkmusn.internship.domain.entity.*;
+import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.repository.InternRepository;
+import io.arkmusn.internship.util.PermissionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -51,6 +52,25 @@ public class InternService extends CrudService<Intern> {
         Intern intern = new Intern();
         intern.setStudent(student);
         return internRepository.findAll(Example.of(intern), page);
+    }
+
+    /**
+     * 申报书审核通过
+     *
+     * @param ids 申报书ID列表
+     * @return 通过数量
+     */
+    @Transactional
+    public int audit(Collection<Integer> ids) {
+        int count = 0;
+        for (Integer id : ids) {
+            PermissionUtils.checkPermission(new Permission(PermissionEntityType.INTERN, id.toString(), PermissionActionType.UPDATE));
+            Intern intern = internRepository.findOne(id);
+            intern.setStatus(InternStatus.PROCESSING);
+            internRepository.save(intern);
+            count++;
+        }
+        return count;
     }
 
     /**
