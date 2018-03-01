@@ -87,8 +87,7 @@ public class StudentService extends CrudService<Student> {
         Student student = new Student();
         student.setUser(getCurrentUser());
         ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("user.id", match -> match.exact());
-        Example<Student> example = Example.of(student, matcher);
-        student = studentRepository.findOne(example);
+        student = studentRepository.findOne(Example.of(student, matcher));
         Assert.notNull(student, "No student at this session!");
         return student;
     }

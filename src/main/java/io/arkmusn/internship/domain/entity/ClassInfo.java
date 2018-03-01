@@ -1,8 +1,5 @@
 package io.arkmusn.internship.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 
 /**
@@ -14,8 +11,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CLASS")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-                  property = "id")
 public class ClassInfo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

@@ -1,7 +1,9 @@
 package io.arkmusn.internship.controller;
 
+import io.arkmusn.internship.domain.entity.Intern;
 import io.arkmusn.internship.domain.entity.Teacher;
 import io.arkmusn.internship.model.bo.Response;
+import io.arkmusn.internship.model.vo.InternListVo;
 import io.arkmusn.internship.model.vo.ResetPasswordVo;
 import io.arkmusn.internship.model.vo.TeacherListVo;
 import io.arkmusn.internship.service.TeacherService;
@@ -56,6 +58,12 @@ public class TeacherController extends BaseController {
         return new Response<>(list);
     }
 
+    /**
+     * 根据教师名获取教师
+     *
+     * @param name 教师名
+     * @return 教师
+     */
     @RequestMapping(value = "queryTeacherByName",
                     method = RequestMethod.GET)
     public @ResponseBody
@@ -101,4 +109,17 @@ public class TeacherController extends BaseController {
     Response resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
         return new Response(teacherService.resetPassword(resetPasswordVo));
     }
+
+    /**
+     * 获取教师的实习申报书列表
+     *
+     * @return 列表
+     */
+    @RequestMapping(value = "intern",
+                    method = RequestMethod.GET)
+    public @ResponseBody
+    Response<Page<Intern>> listIntern(InternListVo internListVo) {
+        return new Response<>(teacherService.listIntern(PageUtils.toPageable(internListVo)));
+    }
 }
+

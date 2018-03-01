@@ -38,6 +38,13 @@ public class InternService extends CrudService<Intern> {
         return super.save(intern);
     }
 
+    /**
+     * 获取学生的实习申报书列表
+     * <p>教师@{@link TeacherService#list(Pageable)}</p>
+     *
+     * @param page 分页对象
+     * @return 列表
+     */
     @Override
     public Page<Intern> list(Pageable page) {
         Student student = studentService.getCurrentStudent();

@@ -3,6 +3,7 @@ package io.arkmusn.internship.service;
 import io.arkmusn.internship.domain.entity.*;
 import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.model.vo.ResetPasswordVo;
+import io.arkmusn.internship.repository.InternRepository;
 import io.arkmusn.internship.repository.RoleRepository;
 import io.arkmusn.internship.repository.TeacherRepository;
 import io.arkmusn.internship.repository.UserRepository;
@@ -12,6 +13,8 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -31,14 +34,16 @@ public class TeacherService extends CrudService<Teacher> {
     private TeacherRepository teacherRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private InternRepository internRepository;
 
     @Autowired
-    public TeacherService(UserService userService, TeacherRepository teacherRepository, UserRepository userRepository, RoleRepository roleRepository) {
+    public TeacherService(UserService userService, TeacherRepository teacherRepository, UserRepository userRepository, RoleRepository roleRepository, InternRepository internRepository) {
         super(teacherRepository);
         this.userService = userService;
         this.teacherRepository = teacherRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.internRepository = internRepository;
     }
 
     /**
@@ -79,6 +84,40 @@ public class TeacherService extends CrudService<Teacher> {
         return super.save(teacher);
     }
 
+    /**
+     * 获取教师的实习申报书列表
+     * <p>prototype@{@link InternService#list(Pageable)}</p>
+     *
+     * @param page 分页对象
+     * @return 列表
+     */
+    public Page<Intern> listIntern(Pageable page) {
+        Teacher teacher = getCurrentTeacher();
+        Intern intern = new Intern();
+        intern.setTeacher(teacher);
+        return internRepository.findAll(Example.of(intern), page);
+    }
+
+    /**
+     * 获取当前登录的教师信息
+     *
+     * @return 教师信息
+     */
+    public Teacher getCurrentTeacher() {
+        Teacher teacher = new Teacher();
+        teacher.setUser(getCurrentUser());
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("user.id", match -> match.exact());
+        teacher = teacherRepository.findOne(Example.of(teacher, matcher));
+        Assert.notNull(teacher, "No teacher at this session");
+        return teacher;
+    }
+
+    /**
+     * 根据教师名获取教师
+     *
+     * @param name 教师名
+     * @return 教师
+     */
     public List<Teacher> queryTeacherByName(String name) {
         Teacher teacher = new Teacher();
         teacher.setName(name);
