@@ -2,6 +2,7 @@ package io.arkmusn.internship.service;
 
 import io.arkmusn.internship.domain.entity.*;
 import io.arkmusn.internship.model.bo.Permission;
+import io.arkmusn.internship.model.vo.FinishInternVo;
 import io.arkmusn.internship.repository.InternRepository;
 import io.arkmusn.internship.util.PermissionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,11 +104,13 @@ public class InternService extends CrudService<Intern> {
     /**
      * 结束实习
      *
-     * @param ids 申报书ID列表
+     * @param finishInternVo {@link FinishInternVo}
      * @return 结果
      */
-    public int finish(Collection<Integer> ids) {
-        // TODO 引入工作流后补全
-        return -1;
+    public boolean finish(FinishInternVo finishInternVo) {
+        Intern intern = internRepository.findOne(finishInternVo.getId());
+        intern.setStatus(InternStatus.FINISHED);
+        intern.setSummary(finishInternVo.getSummary());
+        return internRepository.save(intern) != null;
     }
 }

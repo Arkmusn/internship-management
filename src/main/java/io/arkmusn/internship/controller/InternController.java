@@ -2,6 +2,7 @@ package io.arkmusn.internship.controller;
 
 import io.arkmusn.internship.domain.entity.Intern;
 import io.arkmusn.internship.model.bo.Response;
+import io.arkmusn.internship.model.vo.FinishInternVo;
 import io.arkmusn.internship.model.vo.InternListVo;
 import io.arkmusn.internship.service.InternService;
 import io.arkmusn.internship.util.PageUtils;
@@ -63,7 +64,7 @@ public class InternController extends BaseController {
                     method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Intern intern) {
-        return new Response(internService.save(intern));
+        return new Response<>(internService.save(intern));
     }
 
     /**
@@ -82,14 +83,14 @@ public class InternController extends BaseController {
     /**
      * 结束实习
      *
-     * @param ids 申报书ID列表
+     * @param finishInternVo {@link FinishInternVo}
      * @return 结果
      */
     @RequestMapping(value = "finish",
                     method = RequestMethod.POST)
     public @ResponseBody
-    Response<Integer> finish(@RequestBody Collection<Integer> ids) {
-        return new Response<>(true, internService.finish(ids));
+    Response finish(@RequestBody FinishInternVo finishInternVo) {
+        return new Response<>(true, internService.finish(finishInternVo));
     }
 
     /**

@@ -60,6 +60,10 @@ public class Intern extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private InternStatus status;
 
+    @Column(columnDefinition = "TEXT",
+            length = 4096)
+    private String summary;
+
     public Intern() {
     }
 
@@ -175,5 +179,13 @@ public class Intern extends BaseEntity {
 
     public void setStatus(InternStatus status) {
         this.status = status;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }
