@@ -108,9 +108,26 @@ public class InternService extends CrudService<Intern> {
      * @return 结果
      */
     public boolean finish(FinishInternVo finishInternVo) {
-        Intern intern = internRepository.findOne(finishInternVo.getId());
+        Integer id = finishInternVo.getId();
+        PermissionUtils.checkPermission(new Permission(PermissionEntityType.INTERN, id.toString(), PermissionActionType.UPDATE));
+        Intern intern = internRepository.findOne(id);
         intern.setStatus(InternStatus.FINISHED);
         intern.setSummary(finishInternVo.getSummary());
+        return internRepository.save(intern) != null;
+    }
+
+    /**
+     * 实习评分
+     *
+     * @param finishInternVo {@link FinishInternVo}
+     * @return 结果
+     */
+    public boolean rank(FinishInternVo finishInternVo) {
+        Integer id = finishInternVo.getId();
+        PermissionUtils.checkPermission(new Permission(PermissionEntityType.INTERN, id.toString(), PermissionActionType.UPDATE));
+        Intern intern = internRepository.findOne(id);
+        intern.setStatus(InternStatus.END);
+        intern.setRank(finishInternVo.getRank());
         return internRepository.save(intern) != null;
     }
 }

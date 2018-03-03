@@ -94,6 +94,19 @@ public class InternController extends BaseController {
     }
 
     /**
+     * 实习评分
+     *
+     * @param finishInternVo {@link FinishInternVo}
+     * @return 结果
+     */
+    @RequestMapping(value = "rank",
+                    method = RequestMethod.POST)
+    public @ResponseBody
+    Response rank(@RequestBody FinishInternVo finishInternVo) {
+        return new Response<>(true, internService.rank(finishInternVo));
+    }
+
+    /**
      * 申报书审核通过
      *
      * @param ids 申报书ID列表

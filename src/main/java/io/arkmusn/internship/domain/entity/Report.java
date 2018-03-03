@@ -31,10 +31,6 @@ public class Report extends BaseEntity {
 
     private Integer weekday;
 
-    private Integer rank;
-
-    private Boolean attachment;
-
     @ManyToOne
     private Intern intern;
 
@@ -73,22 +69,6 @@ public class Report extends BaseEntity {
 
     public void setWeekday(Integer weekday) {
         this.weekday = weekday;
-    }
-
-    public Integer getRank() {
-        return rank;
-    }
-
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
-
-    public Boolean getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(Boolean attachment) {
-        this.attachment = attachment;
     }
 
     public Intern getIntern() {
