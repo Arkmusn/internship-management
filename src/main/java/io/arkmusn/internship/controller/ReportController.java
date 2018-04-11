@@ -47,7 +47,7 @@ public class ReportController {
                     method = RequestMethod.POST)
     public @ResponseBody
     Response edit(@RequestBody Report report) {
-        return new Response(reportService.save(report));
+        return new Response<>(reportService.save(report));
     }
 
     /**

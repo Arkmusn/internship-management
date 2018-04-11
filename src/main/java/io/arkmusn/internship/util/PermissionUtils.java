@@ -20,6 +20,16 @@ public abstract class PermissionUtils {
         PermissionUtils.checkPermission(permission.getEntityType().toString().toLowerCase(), permission.getEntityId(), permission.getActionType().toString().toLowerCase());
     }
 
+    public static boolean hasPermission(String... PermissionStrings) {
+        String string = getPermissionString(PermissionStrings);
+        Subject subject = SecurityUtils.getSubject();
+        return subject.isPermitted(string);
+    }
+
+    public static boolean hasPermission(Permission permission) {
+        return PermissionUtils.hasPermission(permission.getEntityType().toString().toLowerCase(), permission.getEntityId(), permission.getActionType().toString().toLowerCase());
+    }
+
     public static void savePermission(Permission permission) {
 
     }

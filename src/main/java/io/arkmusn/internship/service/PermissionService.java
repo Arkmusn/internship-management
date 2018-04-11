@@ -5,6 +5,7 @@ import io.arkmusn.internship.model.bo.Permission;
 import io.arkmusn.internship.repository.RolePermissionRepository;
 import io.arkmusn.internship.repository.UserPermissionRepository;
 import io.arkmusn.internship.repository.UserRepository;
+import io.arkmusn.internship.util.PermissionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -91,6 +92,9 @@ public class PermissionService {
      * @return 结果
      */
     public boolean savePermissionForUser(Permission permission, Integer userId) {
+        if (PermissionUtils.hasPermission(permission)) {
+            return true;
+        }
         User user = userRepository.findOne(userId);
         Assert.notNull(user, "用户ID:" + userId + "不存在");
         UserPermission userPermission = new UserPermission();

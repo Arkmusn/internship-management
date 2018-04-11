@@ -4,6 +4,7 @@ import io.arkmusn.internship.domain.entity.Role;
 import io.arkmusn.internship.domain.entity.User;
 import io.arkmusn.internship.service.PermissionService;
 import io.arkmusn.internship.service.UserService;
+import io.arkmusn.internship.util.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -35,7 +36,7 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
         String password = String.valueOf((char[]) token.getCredentials());
         if (username == null)
             throw new UnknownAccountException();
-        if (password == null)
+        if (StringUtils.isEmpty(password))
             throw new IncorrectCredentialsException();
 
         User user = userService.getUserByUsername(username);

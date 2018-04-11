@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -38,6 +39,30 @@ public class User extends BaseEntity {
                inverseJoinColumns = @JoinColumn(name = "role_id",
                                                 referencedColumnName = "id"))
     private Set<Role> roles;
+
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "DATE")
+    private Date createDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "DATE")
+    private Date updateDate;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public User() {
     }

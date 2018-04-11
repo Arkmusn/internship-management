@@ -64,6 +64,30 @@ public class Intern extends BaseEntity {
             length = 4096)
     private String summary;
 
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "DATE")
+    private Date createDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "DATE")
+    private Date updateDate;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
     public Intern() {
     }
 

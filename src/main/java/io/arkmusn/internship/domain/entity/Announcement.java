@@ -4,28 +4,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 实习周报实体类
- *
  * @author Arkmusn
- *         create 2017/11/14
+ *         create 2018/3/14
  */
 
 @Entity
-public class Report extends BaseEntity {
+public class Announcement extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(columnDefinition = "DATE")
-    private Date startTime;
-
     @Column(columnDefinition = "TEXT",
             length = 1024)
-    private String process;
-
-    @ManyToOne
-    private Intern intern;
+    private String content;
 
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "DATE")
@@ -34,6 +25,24 @@ public class Report extends BaseEntity {
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "DATE")
     private Date updateDate;
+
+    @Enumerated(EnumType.STRING)
+    private AnnouncementType announcementType;
+
+    public Announcement() {
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Date getCreateDate() {
         return createDate;
@@ -51,40 +60,12 @@ public class Report extends BaseEntity {
         this.updateDate = updateDate;
     }
 
-    public Report() {
-    }
-
     @Override
-    public Integer getId() {
-        return id;
+    public Number getId() {
+        return null;
     }
 
     @Override
     public void setId(Number id) {
-        this.id = id.intValue();
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getProcess() {
-        return process;
-    }
-
-    public void setProcess(String process) {
-        this.process = process;
-    }
-
-    public Intern getIntern() {
-        return intern;
-    }
-
-    public void setIntern(Intern intern) {
-        this.intern = intern;
     }
 }
