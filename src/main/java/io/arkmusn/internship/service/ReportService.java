@@ -29,11 +29,11 @@ public class ReportService extends CrudService<Report> {
     public Report save(Report entity) {
         Report result = super.save(entity);
         Student student = result.getIntern().getStudent();
-        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.VIEW), student.getId());
-        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.UPDATE), student.getId());
+        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.VIEW), student.getUser().getId());
+        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.UPDATE), student.getUser().getId());
 
         Teacher teacher = result.getIntern().getTeacher();
-        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.VIEW), teacher.getId());
+        permissionService.savePermissionForUser(new Permission(PermissionEntityType.REPORT, result.getId().toString(), PermissionActionType.VIEW), teacher.getUser().getId());
         return result;
     }
 }

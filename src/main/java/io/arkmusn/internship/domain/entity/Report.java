@@ -1,5 +1,7 @@
 package io.arkmusn.internship.domain.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,12 +13,15 @@ import java.util.Date;
  */
 
 @Entity
+@DynamicUpdate
 public class Report extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
     private String time;
+
+    private Integer position;
 
     @Column(columnDefinition = "TEXT",
             length = 1024)
@@ -54,7 +59,7 @@ public class Report extends BaseEntity {
 
     @Override
     public Integer getId() {
-        return id;
+        return id.intValue();
     }
 
     @Override
@@ -68,6 +73,14 @@ public class Report extends BaseEntity {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public String getProcess() {
