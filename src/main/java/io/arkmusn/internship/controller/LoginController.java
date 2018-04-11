@@ -1,7 +1,13 @@
 package io.arkmusn.internship.controller;
 
+import io.arkmusn.internship.domain.entity.Role;
+import io.arkmusn.internship.domain.entity.Student;
+import io.arkmusn.internship.domain.entity.Teacher;
 import io.arkmusn.internship.domain.entity.User;
 import io.arkmusn.internship.model.bo.Response;
+import io.arkmusn.internship.model.vo.UserInfoVO;
+import io.arkmusn.internship.service.StudentService;
+import io.arkmusn.internship.service.TeacherService;
 import io.arkmusn.internship.service.UserService;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("login")
 public class LoginController extends BaseController {
     private UserService userService;
+    private StudentService studentService;
+    private TeacherService teacherService;
 
     /**
      * 登录接口
@@ -42,7 +50,20 @@ public class LoginController extends BaseController {
         }
 
         User user = userService.getUserByUsername(username);
-        return new Response<>(user);
+
+        Role role = user.getRoles().iterator().next();
+
+        if (role.getName().equals("student")) {
+            Student student = studentService.getCurrentStudent();
+            return new Response<>(new UserInfoVO(user, student.getName()));
+        }
+        else if (role.getName().equals("teacher")) {
+            Teacher teacher = teacherService.getCurrentTeacher();
+            return new Response<>(new UserInfoVO(user, teacher.getName()));
+        }
+        else {
+            return new Response<>(new UserInfoVO(user, "管理员"));
+        }
     }
 
     @RequestMapping(value = "signOut",
@@ -55,5 +76,15 @@ public class LoginController extends BaseController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @Autowired
+    public void setTeacherService(TeacherService teacherService) {
+        this.teacherService = teacherService;
     }
 }
