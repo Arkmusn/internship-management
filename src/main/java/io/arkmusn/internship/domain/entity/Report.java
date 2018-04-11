@@ -16,9 +16,7 @@ public class Report extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(columnDefinition = "DATE")
-    private Date startTime;
+    private String time;
 
     @Column(columnDefinition = "TEXT",
             length = 1024)
@@ -64,12 +62,12 @@ public class Report extends BaseEntity {
         this.id = id.intValue();
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getProcess() {
